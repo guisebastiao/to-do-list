@@ -1,0 +1,759 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(to right, #5D26C1, #a17fe0, #8b4bea);
+}
+
+.container-todo-list {
+    position: relative;
+    max-width: 700px;
+    max-height: 900px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+    transition: all 300ms;
+}
+
+.container-todo-list.active {
+    opacity: 0.8;
+    filter: blur(10px);
+}
+
+.cabecalho {
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+}
+
+.date {
+    position: relative;
+    padding-top: 18px;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 30px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.tempo {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    margin: 0 30px;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+
+#img-temp {
+    width: 60px;
+    height: 60px;
+}
+
+.add-task {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    width: 93%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#days {
+    font-size: 20px;
+    letter-spacing: -1px;
+    color: #333;
+    font-weight: 400;
+}
+
+#hours-minutes {
+    font-size: 26px;
+    letter-spacing: -1px;
+    color: #333;
+    font-weight: 600;
+}
+
+#graus {
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+#add {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    background-color: #8b4bea;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0;
+    color: #fff;
+    transition: all 300ms;
+}
+
+#add:hover {
+    width: 200px;
+    font-size: 18px;
+}
+
+#add:hover #img-add {
+    transform: rotate(180deg);
+}
+
+#img-add {
+    position: absolute;
+    left: 8%;
+    filter: invert(100%);
+    transition: all 300ms;
+}
+
+.tasks {
+    position: relative;
+    width: 90%;
+    height: 70%;
+    overflow: auto;
+}
+
+.tasks::-webkit-scrollbar {
+    position: relative;
+    width: 12px;
+    border-radius: 10px;
+    background: transparent;
+}
+
+.tasks::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: #8b4bea;
+}
+
+.task {
+    width: 98%;
+    height: 100px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    transition: all 300ms;
+    margin: 10px 0px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.task.concluida {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.task.active {
+    height: 270px;
+}
+
+.divisao-1 {
+    display: flex;
+    width: 100%;
+    height: 100px;
+}
+
+#title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    padding: 10px 20px;
+    width: calc(100% - 230px);
+    height: 100%;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    z-index: 1;
+    user-select: text;
+}
+
+#title.concluida {
+    font-style: italic;
+    text-decoration-line: line-through;
+}
+
+.funcoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 230px;
+    height: 100%;
+    z-index: 2;
+}
+
+#edit, #delete, #check, #expand {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#edit {
+    background: #12c2e9;
+}
+
+#delete {
+    background: #f64f59;
+}
+
+#check {
+    background: #34d35f;
+}
+
+#expand {
+    background: #333;
+    transition: all 300ms;
+}
+
+#expand.active {
+    transform: rotate(180deg);
+}
+
+.img-funcoes {
+    filter: invert(100%);
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+#edit > img:hover,
+#delete > img:hover,
+#check > img:hover {
+    animation: animation-icons 800ms ease 0s 1 normal forwards;
+}
+
+@keyframes animation-icons {
+	0%,
+	100% {
+		transform: rotate(0deg);
+		transform-origin: 50% 100%;
+	}
+
+	10% {
+		transform: rotate(2deg);
+	}
+
+	20%,
+	40%,
+	60% {
+		transform: rotate(-4deg);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: rotate(4deg);
+	}
+
+	80% {
+		transform: rotate(-2deg);
+	}
+
+	90% {
+		transform: rotate(2deg);
+	}
+}
+
+.divisao-2 {
+    position: relative;
+    width: 100%;
+    height: 0px;
+    visibility: hidden;
+}
+
+.divisao-2.active {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    visibility: visible;
+}
+
+.create {
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    width: 93%;
+    height: 25px;
+    text-align: end;
+}
+
+#date-create {
+    letter-spacing: -1px;
+    font-size: 14px;
+    color: #111;
+    opacity: 0;
+}
+
+#date-create.active {
+    opacity: 1;
+}
+
+p {
+    text-align: justify;
+    padding: 10px 20px;
+    color: #333;
+    font-size: 16px;
+    transition: all 300ms;
+    opacity: 0;
+    user-select: text;
+}
+
+p.active {
+    opacity: 1;
+}
+
+.adicionar-task {
+    visibility: hidden;
+    overflow: hidden;
+    height: 0px;
+} 
+
+.adicionar-task.active {
+    position: absolute;
+    max-width: 600px;
+    max-height: 400px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    visibility: visible;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    transition: all 300ms;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+}
+
+.editar-task {
+    visibility: hidden;
+    overflow: hidden;
+    height: 0px;
+} 
+
+.editar-task.active {
+    position: absolute;
+    max-width: 600px;
+    max-height: 400px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    visibility: visible;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    transition: all 300ms;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+}
+
+#titulo-adicionar, #conteudo-adicionar, #titulo-editar, #conteudo-editar {
+    width: 60%;
+    height: 35px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 35px;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+#conteudo-adicionar, #conteudo-editar {
+    width: 70%;
+    height: 130px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    text-align: justify;
+    resize: none;
+}
+
+.span-add-task {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+    text-shadow: 0px 1px 15px rgba(0, 0, 0, 0.5);
+}
+
+#adicionar {
+    width: 40%;
+    height: 40px;
+    border-radius: 40px;
+    background: #8b4bea;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.5);
+    transition: all 300ms;
+}
+
+
+#salvar {
+    width: 40%;
+    height: 40px;
+    border-radius: 40px;
+    background: #8b4bea;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.5);
+    transition: all 300ms;
+}
+
+#adicionar:hover {
+    width: 43%;
+    letter-spacing: 1px;
+}
+
+#close-editar, #close-adicionar {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f64f59;
+    cursor: pointer;
+}
+
+#close-editar > img, #close-adicionar > img {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    filter: invert(100%);
+}
+
+.container-excluir {
+    visibility: hidden;
+    height: 0;
+}
+
+.container-excluir.active {
+    position: absolute;
+    max-width: 500px;
+    max-height: 300px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background: #fff;
+    visibility: visible;
+    border-radius: 8px;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+#span-excluir {
+    font-size: 20px;
+    color: #333;
+    letter-spacing: -1px;
+    font-weight: 600;
+}
+
+.botoes {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.button-excluir {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.button-excluir > img {
+    filter: invert(100%);
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+}
+
+
+.button-excluir> img:hover {
+    animation: animation-icons 800ms ease 0s 1 normal forwards;
+}
+
+#button-excluir {
+    background: #34d35f;
+}
+
+#button-nao-excluir {
+    background: #f64f59;
+}
+
+@media screen and (max-width: 700px) {
+    .container-todo-list {
+        border-radius: 0px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container-todo-list {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 0px;
+        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+        transition: all 300ms;
+    }
+
+    .funcoes {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 180px;
+        height: 100%;
+        z-index: 2;
+    }
+    
+    #edit, #delete, #check, #expand {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    #title {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+        padding: 10px 20px;
+        width: calc(100% - 180px);
+        height: 100%;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        z-index: 1;
+        user-select: text;
+    }
+
+    p {
+        text-align: justify;
+        padding: 10px 20px;
+        color: #333;
+        font-size: 14px;
+        transition: all 300ms;
+        opacity: 0;
+        user-select: text;
+    }
+
+    #date-create {
+        letter-spacing: -1px;
+        font-size: 12px;
+        color: #111;
+        opacity: 0;
+    }
+
+    .container-excluir.active {
+        position: absolute;
+        max-height: 200px;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        background: #fff;
+        visibility: visible;
+        border-radius: 8px;
+        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .button-excluir {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    #span-excluir {
+        font-size: 16px;
+        color: #333;
+        letter-spacing: -1px;
+        font-weight: 600;
+    }
+
+    .adicionar-task.active {
+        position: absolute;
+        max-height: 500px;
+        width: 90%;
+        height: 100%;
+        background: #fff;
+        z-index: 100;
+        visibility: visible;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        transition: all 300ms;
+        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    #titulo-adicionar, #conteudo-adicionar, #titulo-editar, #conteudo-editar {
+        width: 85%;
+        height: 35px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 35px;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    #conteudo-adicionar, #conteudo-editar {
+        width: 85%;
+        height: 130px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        text-align: justify;
+        resize: none;
+    }
+
+    .span-add-task {
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #333;
+        text-shadow: 0px 1px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    #close-editar, #close-adicionar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f64f59;
+        cursor: pointer;
+    }
+    
+    #close-editar > img, #close-adicionar > img {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        filter: invert(100%);
+    }
+
+    .editar-task.active {
+        position: absolute;
+        max-height: 500px;
+        width: 90%;
+        height: 100%;
+        background: #fff;
+        z-index: 100;
+        visibility: visible;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        transition: all 300ms;
+        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    #add {
+        position: relative;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 30px;
+        background-color: #8b4bea;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0;
+        color: #fff;
+        transition: all 300ms;
+    }
+    
+    #add:hover {
+        width: 45px;
+        font-size: 0px;
+    }
+
+    #img-add {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        filter: invert(100%);
+        transition: all 300ms;
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+    }
+}
